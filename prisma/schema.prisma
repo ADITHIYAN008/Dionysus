@@ -27,6 +27,7 @@ model User{
 
     userToProject UserToProject[]
     questionsAsked Question[]
+    stripeTransactions StripeTransaction[]
 }
 
 model Project {
@@ -69,6 +70,16 @@ model SourceCodeEmbedding {
 
     projectId String
     project Project @relation(fields: [projectId],references: [id])
+}
+
+model StripeTransaction {
+    id String @id @default(cuid())
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+
+    userId String
+    user User @relation(fields: [userId], references: [id])
+    credits Int
 }
 
 model Question {
